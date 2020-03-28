@@ -61,6 +61,15 @@ const NavBar = () => {
                 </div>
               </li>
             </Link>
+            <Link to='/login'>
+              <li className='nav-item'>
+                <div className='nav-link waves-effect'>
+                  <span className='clearfix d-none d-sm-inline-block'>
+                    Login
+                  </span>
+                </div>
+              </li>
+            </Link>
           </ul>
         </div>
       </div>
