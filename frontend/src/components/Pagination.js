@@ -1,6 +1,6 @@
 import React from 'react';
 
-const Page = () => {
+const Pagination = () => {
   return (
     <nav className='d-flex justify-content-center wow fadeIn'>
       <ul className='pagination pg-blue'>
@@ -48,4 +48,4 @@ const Page = () => {
   );
 };
 
-export default Page;
+export default Pagination;
