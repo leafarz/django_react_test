@@ -1,8 +1,8 @@
-import React from 'react';
 import BodyNav from './../components/BodyNav';
+import Carousel from './../components/Carousel';
 import GridRow from './../components/GridRow';
 import Page from './../components/Page';
-import Carousel from './../components/Carousel';
+import React from 'react';
 
 const data = [
   {

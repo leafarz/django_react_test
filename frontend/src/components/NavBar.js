@@ -1,5 +1,6 @@
-import React from 'react';
 import { Link } from 'react-router-dom';
+import React from 'react';
+
 const NavBar = () => {
   return (
     <nav className='navbar fixed-top navbar-expand-lg navbar-light white scrolling-navbar'>
