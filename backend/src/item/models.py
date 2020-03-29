@@ -2,47 +2,36 @@ from django.db import models
 from django.contrib.auth.models import User
 
 ITEM_CATEGORY = (
-    ("SHIRT", "Shirt"),
-    ("SPORTWEAR", "Sport Wear"),
-    ("OUTWEAR", "Outwear"),
+    ("Shirt", "Shirt"),
+    ("Sport Wear", "Sport Wear"),
+    ("Outwear", "Outwear"),
 )
 
 TAG = (
-    ("PRIMARY", "Primary"),
-    ("SECONDARY", "Secondary"),
-    ("DANGER", "Danger"),
+    ("", "None"),
+    ("primary", "Primary"),
+    ("danger", "Danger"),
 )
 
 TAG_DISPLAY = (
-    ("NEW", "New"),
-    ("BESTSELLER", "Bestseller"),
-    ("None", ""),
+    ("", "None"),
+    ("new", "New"),
+    ("bestseller", "Bestseller"),
 )
 
 
-class ItemArchetype(models.Model):
+class Item(models.Model):
     id = models.AutoField(primary_key=True)
-    image_url = models.CharField(max_length=200)
     label = models.CharField(max_length=200)
+    image_url = models.CharField(max_length=200)
     category = models.CharField(max_length=20, choices=ITEM_CATEGORY)
-    tag = models.CharField(max_length=10, choices=TAG)
-    tag_display = models.CharField(max_length=10, choices=TAG_DISPLAY)
-    price = models.IntegerField()
-
-    class Meta:
-        verbose_name_plural = "Item Archetypes"
+    tag = models.CharField(max_length=10, choices=TAG, default="", blank=True)
+    tag_display = models.CharField(
+        max_length=10, choices=TAG_DISPLAY, default="", blank=True
+    )
+    quantity = models.IntegerField(default=100)
+    original_price = models.IntegerField()
+    curr_price = models.IntegerField()
 
     def __str__(self):
         return self.label
-
-
-class ItemInventory(models.Model):
-    item_archetype = models.ForeignKey(ItemArchetype, on_delete=models.CASCADE)
-    quantity = models.IntegerField(default=100)
-    price = models.IntegerField()
-
-    class Meta:
-        verbose_name_plural = "Item Inventories"
-
-    def __str__(self):
-        return self.item_archetype.label

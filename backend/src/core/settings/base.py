@@ -63,7 +63,7 @@ STATIC_URL = "/static/"
 
 # CORS
 CORS_ORIGIN_ALLOW_ALL = False
-CORS_ORIGIN_WHITELIST = []
+CORS_ORIGIN_WHITELIST = ["http://localhost:3000"]
 
 # heroku
 django_heroku.settings(locals())

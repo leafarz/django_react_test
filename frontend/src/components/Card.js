@@ -5,7 +5,7 @@ const Card = props => {
     <div className='col-lg-3 col-md-6 mb-4'>
       <div className='card'>
         <div className='view overlay'>
-          <img src={props.data.url} className='card-img-top' alt='' />
+          <img src={props.data.image_url} className='card-img-top' alt='' />
           <a>
             <div className='mask rgba-white-slight'></div>
           </a>
@@ -19,9 +19,10 @@ const Card = props => {
             <strong>
               <a href='' className='dark-grey-text'>
                 {props.data.label}
+
                 {props.data.tag && (
                   <span className={`badge badge-pill ${props.data.tag}-color`}>
-                    {props.data.tagDisplay}
+                    {props.data.tag_display}
                   </span>
                 )}
               </a>
@@ -29,7 +30,7 @@ const Card = props => {
           </h5>
 
           <h4 className='font-weight-bold blue-text'>
-            <strong>{props.data.price}$</strong>
+            <strong>{props.data.curr_price}$</strong>
           </h4>
         </div>
       </div>

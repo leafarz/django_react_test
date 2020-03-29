@@ -1,14 +1,9 @@
 from rest_framework import viewsets
 
-from item.models import ItemArchetype, ItemInventory
-from item.serializers import ItemArchetypeSerializer, ItemInventorySerializer
+from item.models import Item
+from item.serializers import ItemSerializer
 
 
-class ItemArchetypeViewSet(viewsets.ModelViewSet):
-    queryset = ItemArchetype.objects.all()
-    serializer_class = ItemArchetypeSerializer
-
-
-class ItemInventoryViewSet(viewsets.ModelViewSet):
-    queryset = ItemInventory.objects.all()
-    serializer_class = ItemInventorySerializer
+class ItemViewSet(viewsets.ModelViewSet):
+    queryset = Item.objects.all()
+    serializer_class = ItemSerializer
