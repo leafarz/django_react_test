@@ -1,7 +1,11 @@
-import { Link } from 'react-router-dom';
+import './NavBar.css';
+
+import { Link, NavLink, useLocation } from 'react-router-dom';
+
 import React from 'react';
 
 const NavBar = () => {
+  const location = useLocation();
   return (
     <nav className='navbar fixed-top navbar-expand-lg navbar-light white scrolling-navbar'>
       <div className='container'>
@@ -27,24 +31,21 @@ const NavBar = () => {
         <div className='collapse navbar-collapse' id='navbarSupportedContent'>
           {/* <!-- Left --> */}
           <ul className='navbar-nav mr-auto'>
-            <Link to='/'>
-              <li className='nav-item active'>
-                <div className='nav-link waves-effect'>
-                  Home
-                  <span className='sr-only'>(current)</span>
-                </div>
+            <NavLink to='/' exact activeClassName='active-link'>
+              <li className='nav-item'>
+                <div className='nav-link waves-effect'>Home</div>
               </li>
-            </Link>
-            <Link to='/products'>
+            </NavLink>
+            <NavLink to='/products' exact activeClassName='active-link'>
               <li className='nav-item'>
                 <div className='nav-link waves-effect'>Products</div>
               </li>
-            </Link>
-            <Link to='/checkout'>
+            </NavLink>
+            <NavLink to='/checkout' exact activeClassName='active-link'>
               <li className='nav-item'>
                 <div className='nav-link waves-effect'>Checkout</div>
               </li>
-            </Link>
+            </NavLink>
           </ul>
 
           {/* <!-- Right --> */}
