@@ -1,6 +1,12 @@
+import { pageSelector, setPageDispatch } from './../slices/page';
+import { useDispatch, useSelector } from 'react-redux';
+
 import React from 'react';
 
-const Pagination = () => {
+const Pagination = props => {
+  const dispatch = useDispatch();
+  const page = useSelector(pageSelector);
+
   return (
     <nav className='d-flex justify-content-center wow fadeIn'>
       <ul className='pagination pg-blue'>
@@ -10,32 +16,20 @@ const Pagination = () => {
             <span className='sr-only'>Previous</span>
           </a>
         </li>
-
-        <li className='page-item active'>
-          <a className='page-link' href='#'>
-            1<span className='sr-only'>(current)</span>
-          </a>
-        </li>
-        <li className='page-item'>
-          <a className='page-link' href='#'>
-            2
-          </a>
-        </li>
-        <li className='page-item'>
-          <a className='page-link' href='#'>
-            3
-          </a>
-        </li>
-        <li className='page-item'>
-          <a className='page-link' href='#'>
-            4
-          </a>
-        </li>
-        <li className='page-item'>
-          <a className='page-link' href='#'>
-            5
-          </a>
-        </li>
+        {[...Array(Math.ceil(props.data / 8)).keys()].map(i => {
+          return (
+            <li className={`page-item ${i == page ? 'active' : ''}`}>
+              <a
+                onClick={() => dispatch(setPageDispatch(i))}
+                className='page-link'
+                href='#'
+              >
+                {i + 1}
+                <span className='sr-only'>(current)</span>
+              </a>
+            </li>
+          );
+        })}
 
         <li className='page-item'>
           <a className='page-link' href='#' aria-label='Next'>

@@ -1,56 +1,33 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
+import { fetchItems, itemsSelector } from './../slices/items';
+import { useDispatch, useSelector } from 'react-redux';
 
 import BodyNav from '../components/BodyNav';
 import Carousel from '../components/Carousel';
 import GridRow from '../components/GridRow';
-import Page from '../components/Pagination';
-
-// const data = [
-//   {
-//     url:
-//       'https://mdbootstrap.com/img/Photos/Horizontal/E-commerce/Vertical/12.jpg',
-//     category: 'Shirt',
-//     label: 'Denim shirt',
-//     tag: 'danger',
-//     tagDisplay: 'NEW',
-//     price: '120'
-//   },
-//   {
-//     url:
-//       'https://mdbootstrap.com/img/Photos/Horizontal/E-commerce/Vertical/13.jpg',
-//     category: 'Sport Wear',
-//     label: 'Sweatshirt',
-//     tag: '',
-//     price: '139'
-//   },
-//   {
-//     url:
-//       'https://mdbootstrap.com/img/Photos/Horizontal/E-commerce/Vertical/14.jpg',
-//     category: 'Sport Wear',
-//     label: 'Grey blouse',
-//     tag: 'primary',
-//     tagDisplay: 'bestseller',
-//     price: '139'
-//   },
-//   {
-//     url:
-//       'https://mdbootstrap.com/img/Photos/Horizontal/E-commerce/Vertical/15.jpg',
-//     category: 'Outwear',
-//     label: 'Black jacket',
-//     price: '219'
-//   }
-// ];
+import Pagination from '../components/Pagination';
 
 const Home = () => {
-  const [data, setData] = useState([]);
+  const dispatch = useDispatch();
+  const { items, loading, hasErrors } = useSelector(itemsSelector);
+
   useEffect(() => {
-    fetch('http://127.0.0.1:8000/api/item/')
-      .then(res => res.json())
-      .then(res => {
-        setData([...res]);
-        console.log(res);
-      });
-  }, []);
+    dispatch(fetchItems());
+  }, [dispatch]);
+
+  const renderItems = () => {
+    const length = Object.keys(items).length;
+    if (loading || hasErrors || length == 0) return;
+    return (
+      <React.Fragment>
+        <section className='text-center mb-4'>
+          <GridRow data={items} />
+        </section>
+        <Pagination data={length} />
+      </React.Fragment>
+    );
+  };
+
   return (
     <div>
       <Carousel />
@@ -58,12 +35,7 @@ const Home = () => {
       <main>
         <div className='container'>
           <BodyNav />
-
-          <section className='text-center mb-4'>
-            <GridRow data={data} />
-          </section>
-
-          <Page />
+          {renderItems()}
         </div>
       </main>
     </div>
