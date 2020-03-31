@@ -40,7 +40,7 @@ const Carousel = () => {
 
       <div className='carousel-inner' role='listbox'>
         <div className='carousel-item active'>
-          <div className='view' style={{ style1 }}>
+          <div className='view' style={{ style2 }}>
             <div className='mask rgba-black-strong d-flex justify-content-center align-items-center'>
               <div className='text-center white-text mx-5 wow fadeIn'>
                 <h1 className='mb-4'>
@@ -61,6 +61,7 @@ const Carousel = () => {
 
                 <a
                   target='_blank'
+                  rel='noopener noreferrer'
                   href='https://mdbootstrap.com/education/bootstrap/'
                   className='btn btn-outline-white btn-lg'
                 >
@@ -94,6 +95,7 @@ const Carousel = () => {
 
                 <a
                   target='_blank'
+                  rel='noopener noreferrer'
                   href='https://mdbootstrap.com/education/bootstrap/'
                   className='btn btn-outline-white btn-lg'
                 >
@@ -106,7 +108,7 @@ const Carousel = () => {
         </div>
 
         <div className='carousel-item'>
-          <div className='view' style={{ style1 }}>
+          <div className='view' style={{ style3 }}>
             <div className='mask rgba-black-strong d-flex justify-content-center align-items-center'>
               <div className='text-center white-text mx-5 wow fadeIn'>
                 <h1 className='mb-4'>
@@ -127,6 +129,7 @@ const Carousel = () => {
 
                 <a
                   target='_blank'
+                  rel='noopener noreferrer'
                   href='https://mdbootstrap.com/education/bootstrap/'
                   className='btn btn-outline-white btn-lg'
                 >

@@ -17,13 +17,16 @@ const Home = () => {
 
   const renderItems = () => {
     const length = Object.keys(items).length;
-    if (loading || hasErrors || length == 0) return;
+    const displayCount = 8;
+
+    if (loading || hasErrors || length === 0) return;
+
     return (
       <React.Fragment>
         <section className='text-center mb-4'>
-          <GridRow data={items} />
+          <GridRow data={{ items: items, displayCount: displayCount }} />
         </section>
-        <Pagination data={length} />
+        <Pagination data={{ length: length, displayCount: displayCount }} />
       </React.Fragment>
     );
   };

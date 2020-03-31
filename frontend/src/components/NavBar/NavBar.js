@@ -1,11 +1,10 @@
 import './NavBar.css';
 
-import { Link, NavLink, useLocation } from 'react-router-dom';
+import { Link, NavLink } from 'react-router-dom';
 
 import React from 'react';
 
 const NavBar = () => {
-  const location = useLocation();
   return (
     <nav className='navbar fixed-top navbar-expand-lg navbar-light white scrolling-navbar'>
       <div className='container'>

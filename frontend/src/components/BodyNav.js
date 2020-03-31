@@ -20,38 +20,18 @@ const BodyNav = () => {
       <div className='collapse navbar-collapse' id='basicExampleNav'>
         <ul className='navbar-nav mr-auto'>
           <li className='nav-item active'>
-            <a className='nav-link' href='#'>
-              All
-              <span className='sr-only'>(current)</span>
-            </a>
+            <a className='nav-link page-item'>All</a>
           </li>
           <li className='nav-item'>
-            <a className='nav-link' href='#'>
-              Shirts
-            </a>
+            <a className='nav-link page-item'>Shirts</a>
           </li>
           <li className='nav-item'>
-            <a className='nav-link' href='#'>
-              Sport wears
-            </a>
+            <a className='nav-link page-item'>Sport wears</a>
           </li>
           <li className='nav-item'>
-            <a className='nav-link' href='#'>
-              Outwears
-            </a>
+            <a className='nav-link page-item'>Outwears</a>
           </li>
         </ul>
-
-        <form className='form-inline'>
-          <div className='md-form my-0'>
-            <input
-              className='form-control mr-sm-2'
-              type='text'
-              placeholder='Search'
-              aria-label='Search'
-            />
-          </div>
-        </form>
       </div>
     </nav>
   );
