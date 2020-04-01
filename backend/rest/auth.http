@@ -1,0 +1,27 @@
+### Registration
+POST http://127.0.0.1:8000/auth/registration/ HTTP/1.1
+Content-Type: application/json
+
+{
+    "username": "",
+    "password1": "",
+    "password2": "",
+    "email": ""
+}
+
+### Login
+POST http://127.0.0.1:8000/auth/login/ HTTP/1.1
+Content-Type: application/json
+
+{
+    "username": "",
+    "password": ""
+}
+
+### Logout
+POST http://127.0.0.1:8000/auth/logout/ HTTP/1.1
+Authorization: Token 2b9ff8ef20d21b0e5ddf80954e44e6a7d7a3d872
+Content-Type: application/json
+{
+    "username": ""
+}

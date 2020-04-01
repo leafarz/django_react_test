@@ -1,0 +1,16 @@
+### Get all items
+GET http://127.0.0.1:8000/api/item/ HTTP/1.1
+
+### Post item
+POST http://127.0.0.1:8000/api/item/ HTTP/1.1
+content-type: application/json
+{
+    "label": "",
+    "image_url": "",
+    "category": "",
+    "tag": "",
+    "tag_display": "",
+    "quantity": 100,
+    "original_price": 100,
+    "curr_price": 100
+}
