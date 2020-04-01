@@ -14,11 +14,25 @@ INSTALLED_APPS = [
     "django.contrib.sessions",
     "django.contrib.messages",
     "django.contrib.staticfiles",
+    "django.contrib.sites",
+    "allauth",
+    "allauth.account",
+    "dj_rest_auth",
+    "dj_rest_auth.registration",
+    "rest_framework",
+    "rest_framework.authtoken",
+    "corsheaders",
     "commands",
     "item",
-    "rest_framework",
-    "corsheaders",
 ]
+
+REST_FRAMEWORK = {
+    "DEFAULT_AUTHENTICATION_CLASSES": ["dj_rest_auth.utils.JWTCookieAuthentication",]
+}
+
+SITE_ID = 1
+REST_USE_JWT = True
+EMAIL_BACKEND = "django.core.mail.backends.console.EmailBackend"
 
 MIDDLEWARE = [
     "django.middleware.security.SecurityMiddleware",

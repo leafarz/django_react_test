@@ -1,9 +1,12 @@
 ### Get all items
 GET http://127.0.0.1:8000/api/item/ HTTP/1.1
+Authorization: Bearer ---
 
 ### Post item
 POST http://127.0.0.1:8000/api/item/ HTTP/1.1
-content-type: application/json
+Content-Type: application/json
+Authorization: Bearer ---
+
 {
     "label": "",
     "image_url": "",
