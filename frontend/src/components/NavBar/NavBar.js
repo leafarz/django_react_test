@@ -17,6 +17,21 @@ const NavBar = () => {
   let closeEl;
 
   useEffect(() => {
+    if (username) {
+      closeEl.click();
+    }
+  }, [username]);
+
+  useEffect(() => {
+    if (loading) {
+      return;
+    }
+    if (!hasErrors) {
+      setState({ username: '', password: '' });
+    }
+  }, [loading, hasErrors]);
+
+  useEffect(() => {
     dispatch(fetchUserDetail('http://127.0.0.1:8000/auth/user/'));
   }, [dispatch]);
 
@@ -25,8 +40,6 @@ const NavBar = () => {
     dispatch(
       login(state.username, state.password, 'http://127.0.0.1:8000/auth/login/')
     );
-
-    setState({ username: '', password: '' });
   };
 
   const onHandleLogout = e => {
@@ -42,15 +55,26 @@ const NavBar = () => {
 
   const renderLogin = () => {
     return username ? (
-      <li className='nav-item'>
-        <div className='nav-link waves-effect'>
-          <span className='clearfix d-none d-sm-inline-block'>
-            <a onClick={onHandleLogout}>Logout</a>
-          </span>
-        </div>
-      </li>
+      <React.Fragment>
+        <li className='nav-item'>
+          <div className='nav-link waves-effect'>
+            <span className='clearfix d-none d-sm-inline-flex'>
+              <div className='px-2'>
+                Hi <b>{username}</b>!
+              </div>
+            </span>
+          </div>
+        </li>
+        <li className='nav-item pr-4'>
+          <div className='nav-link waves-effect'>
+            <span className='clearfix d-none d-sm-inline-flex'>
+              <a onClick={onHandleLogout}>Logout</a>
+            </span>
+          </div>
+        </li>
+      </React.Fragment>
     ) : (
-      <li className='nav-item'>
+      <li className='nav-item pr-4'>
         <div className='nav-link waves-effect'>
           <span className='clearfix d-none d-sm-inline-block'>
             <a data-toggle='modal' data-target='#modalLoginForm'>
@@ -165,6 +189,7 @@ const NavBar = () => {
 
             {/* <!-- Right --> */}
             <ul className='navbar-nav nav-flex-icons'>
+              {renderLogin()}
               <Link to='/checkout'>
                 <li className='nav-item'>
                   <div className='nav-link waves-effect'>
@@ -177,7 +202,6 @@ const NavBar = () => {
                   </div>
                 </li>
               </Link>
-              {renderLogin()}
             </ul>
           </div>
         </div>
