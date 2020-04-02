@@ -1,5 +1,5 @@
-# E-commerce Test
-Sample E-Commerce website
+# Django-React-Test
+Test project for separate django and react
 
 ## Frameworks / Tools Used
 1. Django

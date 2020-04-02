@@ -10,7 +10,7 @@ const NavBar = () => {
       <div className='container'>
         {/* <!-- Brand --> */}
         <Link to='/' className='navbar-brand waves-effect'>
-          <strong className='blue-text'>ECommerce Test</strong>
+          <strong className='blue-text'>Django-React Test</strong>
         </Link>
 
         {/* <!-- Collapse --> */}
