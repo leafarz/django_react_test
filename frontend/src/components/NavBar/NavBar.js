@@ -1,20 +1,71 @@
 import './NavBar.css';
 
 import { Link, NavLink } from 'react-router-dom';
-
-import React from 'react';
+import React, { useEffect, useState } from 'react';
+import {
+  authSelector,
+  fetchUserDetail,
+  login,
+  logout
+} from './../../slices/auth';
+import { useDispatch, useSelector } from 'react-redux';
 
 const NavBar = () => {
+  const dispatch = useDispatch();
+  const [state, setState] = useState({ username: '', password: '' });
+  const { username, loading, hasErrors } = useSelector(authSelector);
   let closeEl;
+
+  useEffect(() => {
+    dispatch(fetchUserDetail('http://127.0.0.1:8000/auth/user/'));
+  }, [dispatch]);
+
   const onHandleSubmit = e => {
     e.preventDefault();
-    closeEl.click(); // HAXXX
+    dispatch(
+      login(state.username, state.password, 'http://127.0.0.1:8000/auth/login/')
+    );
+
+    setState({ username: '', password: '' });
   };
+
+  const onHandleLogout = e => {
+    dispatch(logout('http://127.0.0.1:8000/auth/logout/'));
+  };
+
+  const onHandleChange = e => {
+    setState({
+      ...state,
+      [e.target.name]: e.target.value
+    });
+  };
+
+  const renderLogin = () => {
+    return username ? (
+      <li className='nav-item'>
+        <div className='nav-link waves-effect'>
+          <span className='clearfix d-none d-sm-inline-block'>
+            <a onClick={onHandleLogout}>Logout</a>
+          </span>
+        </div>
+      </li>
+    ) : (
+      <li className='nav-item'>
+        <div className='nav-link waves-effect'>
+          <span className='clearfix d-none d-sm-inline-block'>
+            <a data-toggle='modal' data-target='#modalLoginForm'>
+              Login
+            </a>
+          </span>
+        </div>
+      </li>
+    );
+  };
+
   return (
     <div>
       <form
-        className='modal fade needs-validation'
-        novalidate
+        className='modal fade'
         id='modalLoginForm'
         tabIndex='-1'
         role='dialog'
@@ -42,6 +93,9 @@ const NavBar = () => {
                   type='text'
                   id='defaultForm-user'
                   className='form-control'
+                  name='username'
+                  value={state.username}
+                  onChange={onHandleChange}
                 />
                 <label htmlFor='defaultForm-user'>Your username</label>
               </div>
@@ -52,10 +106,14 @@ const NavBar = () => {
                   type='password'
                   id='defaultForm-pass'
                   className='form-control'
+                  name='password'
+                  value={state.password}
+                  onChange={onHandleChange}
                 />
                 <label htmlFor='defaultForm-pass'>Your password</label>
               </div>
             </div>
+
             <div className='modal-footer d-flex justify-content-center'>
               <button className='btn btn-default' onClick={onHandleSubmit}>
                 Login
@@ -119,17 +177,7 @@ const NavBar = () => {
                   </div>
                 </li>
               </Link>
-              {/* <Link to='/login'> */}
-              <li className='nav-item'>
-                <div className='nav-link waves-effect'>
-                  <span className='clearfix d-none d-sm-inline-block'>
-                    <a data-toggle='modal' data-target='#modalLoginForm'>
-                      Login
-                    </a>
-                  </span>
-                </div>
-              </li>
-              {/* </Link> */}
+              {renderLogin()}
             </ul>
           </div>
         </div>

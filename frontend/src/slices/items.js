@@ -18,18 +18,14 @@ const itemsSlice = createSlice({
       state.loading = false;
       state.hasErrors = false;
     },
-    getItemsFailure: state => {
+    getItemsFail: state => {
       state.loading = false;
       state.hasErrors = true;
     }
   }
 });
 
-export const {
-  getItems,
-  getItemsSuccess,
-  getItemsFailure
-} = itemsSlice.actions;
+export const { getItems, getItemsSuccess, getItemsFail } = itemsSlice.actions;
 export const itemsSelector = state => state.items;
 
 export function fetchItems() {
@@ -42,7 +38,7 @@ export function fetchItems() {
           dispatch(getItemsSuccess(res));
         });
     } catch (error) {
-      dispatch(getItemsFailure());
+      dispatch(getItemsFail());
     }
   };
 }
