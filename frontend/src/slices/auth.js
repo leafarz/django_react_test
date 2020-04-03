@@ -6,10 +6,10 @@ const authSlice = createSlice({
   initialState: {
     username: null,
     loading: false,
-    hasErrors: false
+    hasErrors: false,
   },
   reducers: {
-    getAuth: state => {
+    getAuth: (state) => {
       state.loading = true;
     },
     onAuthSuccess: (state, { payload }) => {
@@ -17,45 +17,47 @@ const authSlice = createSlice({
       state.loading = false;
       state.hasErrors = false;
     },
-    onAuthFail: state => {
+    onAuthFail: (state) => {
+      localStorage.removeItem('token');
+      localStorage.removeItem('refreshToken');
       state.username = null;
       state.loading = false;
       state.hasErrors = true;
     },
-    clearData: state => {
+    clearData: (state) => {
       localStorage.removeItem('token');
-      localStorage.removeItem('refreshtoken');
+      localStorage.removeItem('refreshToken');
       state.username = null;
       state.loading = false;
       state.hasErrors = false;
-    }
-  }
+    },
+  },
 });
 
 export const {
   getAuth,
   onAuthSuccess,
   onAuthFail,
-  clearData
+  clearData,
 } = authSlice.actions;
 
-export const authSelector = state => state.auth;
+export const authSelector = (state) => state.auth;
 
-export const fetchUserDetail = url => async dispatch => {
+export const fetchUserDetail = (url) => async (dispatch) => {
   const token = localStorage.getItem('token');
   if (token) {
     dispatch(getAuth());
     await axios
       .get(url, {
         headers: {
-          Authorization: `Bearer ${token}`
-        }
+          Authorization: `Bearer ${token}`,
+        },
       })
-      .then(res => {
+      .then((res) => {
         console.log(res);
         dispatch(onAuthSuccess(res.data.username));
       })
-      .catch(err => {
+      .catch((err) => {
         console.log(err);
         dispatch(onAuthFail());
       });
@@ -64,45 +66,45 @@ export const fetchUserDetail = url => async dispatch => {
   }
 };
 
-export const login = (username, password, url) => async dispatch => {
+export const login = (username, password, url) => async (dispatch) => {
   dispatch(getAuth());
   await axios
     .post(
       url,
       JSON.stringify({
         username: username,
-        password: password
+        password: password,
       }),
       {
         headers: {
-          'Content-Type': 'application/json'
-        }
+          'Content-Type': 'application/json',
+        },
       }
     )
-    .then(res => {
+    .then((res) => {
       localStorage.setItem('token', res.data.access_token);
-      localStorage.setItem('refresh_token', res.data.refresh_token);
+      localStorage.setItem('refreshToken', res.data.refresh_token);
       dispatch(onAuthSuccess(res.data.user.username));
     })
-    .catch(err => {
+    .catch((err) => {
       console.error(err);
     });
 };
 
-export const logout = url => async dispatch => {
+export const logout = (url) => async (dispatch) => {
   dispatch(getAuth());
   const token = localStorage.getItem('token');
   if (token) {
     await axios
       .post(url, {
         headers: {
-          Authorization: `Bearer ${token}`
-        }
+          Authorization: `Bearer ${token}`,
+        },
       })
-      .then(res => {
+      .then((res) => {
         dispatch(clearData());
       })
-      .catch(err => {
+      .catch((err) => {
         console.error(err);
       });
   }

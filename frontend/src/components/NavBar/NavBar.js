@@ -6,7 +6,7 @@ import {
   authSelector,
   fetchUserDetail,
   login,
-  logout
+  logout,
 } from './../../slices/auth';
 import { useDispatch, useSelector } from 'react-redux';
 
@@ -32,24 +32,28 @@ const NavBar = () => {
   }, [loading, hasErrors]);
 
   useEffect(() => {
-    dispatch(fetchUserDetail('http://127.0.0.1:8000/auth/user/'));
+    dispatch(fetchUserDetail('http://127.0.0.1:8000/api/auth/user/'));
   }, [dispatch]);
 
-  const onHandleSubmit = e => {
+  const onHandleSubmit = (e) => {
     e.preventDefault();
     dispatch(
-      login(state.username, state.password, 'http://127.0.0.1:8000/auth/login/')
+      login(
+        state.username,
+        state.password,
+        'http://127.0.0.1:8000/api/auth/login/'
+      )
     );
   };
 
-  const onHandleLogout = e => {
-    dispatch(logout('http://127.0.0.1:8000/auth/logout/'));
+  const onHandleLogout = (e) => {
+    dispatch(logout('http://127.0.0.1:8000/api/auth/logout/'));
   };
 
-  const onHandleChange = e => {
+  const onHandleChange = (e) => {
     setState({
       ...state,
-      [e.target.name]: e.target.value
+      [e.target.name]: e.target.value,
     });
   };
 
@@ -105,7 +109,7 @@ const NavBar = () => {
                 className='close'
                 data-dismiss='modal'
                 aria-label='Close'
-                ref={close => (closeEl = close)}
+                ref={(close) => (closeEl = close)}
               >
                 <span aria-hidden='true'>&times;</span>
               </button>
