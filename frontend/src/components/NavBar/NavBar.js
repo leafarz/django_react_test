@@ -177,11 +177,6 @@ const NavBar = () => {
                   <div className='nav-link waves-effect'>Home</div>
                 </li>
               </NavLink>
-              <NavLink to='/products' exact activeClassName='active-link'>
-                <li className='nav-item'>
-                  <div className='nav-link waves-effect'>Products</div>
-                </li>
-              </NavLink>
               <NavLink to='/checkout' exact activeClassName='active-link'>
                 <li className='nav-item'>
                   <div className='nav-link waves-effect'>Checkout</div>

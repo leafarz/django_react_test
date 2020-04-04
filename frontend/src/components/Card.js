@@ -1,23 +1,24 @@
+import { Link } from 'react-router-dom';
 import React from 'react';
 
-const Card = props => {
+const Card = (props) => {
   return (
     <div className='col-lg-3 col-md-6 mb-4'>
       <div className='card'>
         <div className='view overlay'>
           <img src={props.data.image_url} className='card-img-top' alt='' />
-          <a>
+          <Link to={`/product/${props.data.id}`}>
             <div className='mask rgba-white-slight'></div>
-          </a>
+          </Link>
         </div>
 
         <div className='card-body text-center'>
-          <a href='' className='grey-text'>
+          <Link to={`/product/${props.data.id}`} className='grey-text'>
             <h5>{props.data.category}</h5>
-          </a>
+          </Link>
           <h5>
             <strong>
-              <a href='' className='dark-grey-text'>
+              <Link to={`/product/${props.data.id}`} className='dark-grey-text'>
                 {props.data.label}
 
                 {props.data.tag && (
@@ -25,7 +26,7 @@ const Card = props => {
                     {props.data.tag_display}
                   </span>
                 )}
-              </a>
+              </Link>
             </strong>
           </h5>
 

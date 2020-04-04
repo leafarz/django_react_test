@@ -9,7 +9,7 @@ import Checkout from '../routes/Checkout';
 import Footer from './Footer';
 import Home from '../routes/Home';
 import NavBar from './NavBar/NavBar';
-import Products from '../routes/Products';
+import Product from '../routes/Product';
 import React from 'react';
 import Unauthorized from '../routes/Unauthorized';
 import { authSelector } from './../slices/auth';
@@ -23,14 +23,10 @@ function App() {
       <NavBar />
       <Switch>
         <Route path='/' exact component={Home} />
-        <Route
-          path='/products'
-          render={() =>
-            username ? <Products /> : <Redirect to='/unauthorized' />
-          }
-        />
+        <Route path='/product/:id' component={Product} />
         <Route
           path='/checkout'
+          component={Checkout}
           render={() =>
             username ? <Checkout /> : <Redirect to='/unauthorized' />
           }

@@ -9,7 +9,7 @@ import Pagination from '../components/Pagination';
 
 const Home = () => {
   const dispatch = useDispatch();
-  const { items, loading, hasErrors } = useSelector(itemsSelector);
+  const { items, loading } = useSelector(itemsSelector);
 
   useEffect(() => {
     dispatch(fetchItems());
@@ -19,15 +19,15 @@ const Home = () => {
     const length = Object.keys(items).length;
     const displayCount = 8;
 
-    if (loading || hasErrors || length === 0) return;
-
     return (
-      <React.Fragment>
-        <section className='text-center mb-4'>
-          <GridRow data={{ items: items, displayCount: displayCount }} />
-        </section>
-        <Pagination data={{ length: length, displayCount: displayCount }} />
-      </React.Fragment>
+      !loading && (
+        <React.Fragment>
+          <section className='text-center mb-4'>
+            <GridRow data={{ items: items, displayCount: displayCount }} />
+          </section>
+          <Pagination data={{ length: length, displayCount: displayCount }} />
+        </React.Fragment>
+      )
     );
   };
 
