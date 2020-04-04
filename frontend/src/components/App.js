@@ -1,10 +1,10 @@
 import { Route, BrowserRouter as Router, Switch } from 'react-router-dom';
 
-import Checkout from '../pages/Checkout';
+import Checkout from '../routes/Checkout';
 import Footer from './Footer';
-import Home from '../pages/Home';
+import Home from '../routes/Home';
 import NavBar from './NavBar/NavBar';
-import Products from '../pages/Products';
+import Products from '../routes/Products';
 import React from 'react';
 
 function App() {
