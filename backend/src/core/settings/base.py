@@ -75,9 +75,5 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 STATIC_URL = "/static/"
 
-# CORS
-CORS_ORIGIN_ALLOW_ALL = False
-CORS_ORIGIN_WHITELIST = ["http://localhost:3000"]
-
 # heroku
 django_heroku.settings(locals())

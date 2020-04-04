@@ -3,6 +3,10 @@ from .base import *
 DEBUG = True
 ALLOWED_HOSTS = []
 
+# CORS
+CORS_ORIGIN_ALLOW_ALL = False
+CORS_ORIGIN_WHITELIST = ["http://localhost:3000"]
+
 # Database
 DATABASES = {
     "default": {
