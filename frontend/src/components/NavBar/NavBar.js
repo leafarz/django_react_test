@@ -1,7 +1,7 @@
 import './NavBar.css';
 
 import { Link, NavLink } from 'react-router-dom';
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import {
   authSelector,
   fetchUserDetail,
@@ -14,11 +14,11 @@ const NavBar = () => {
   const dispatch = useDispatch();
   const [state, setState] = useState({ username: '', password: '' });
   const { username, loading, hasErrors } = useSelector(authSelector);
-  let closeEl;
+  let closeRef = useRef(null);
 
   useEffect(() => {
     if (username) {
-      closeEl.click();
+      closeRef.current.click();
     }
   }, [username]);
 
@@ -109,7 +109,7 @@ const NavBar = () => {
                 className='close'
                 data-dismiss='modal'
                 aria-label='Close'
-                ref={(close) => (closeEl = close)}
+                ref={closeRef}
               >
                 <span aria-hidden='true'>&times;</span>
               </button>
