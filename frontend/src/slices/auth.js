@@ -37,21 +37,11 @@ const authSlice = createSlice({
   },
 });
 
-export const {
-  getAuth,
-  onAuthSuccess,
-  onAuthFail,
-  clearData,
-} = authSlice.actions;
-
-export const authSelector = (state) => state.auth;
-
 const tokenCheck = async (token, onSuccess, onFail) => {
   const refresh_url = `${config.baseurl}/api/auth/token/refresh/`;
   const hasExpired = (token, min_threshold) => {
     const exp = jwtDecode(token)['exp'];
-    const diff = exp - Date.now();
-    min_threshold = min_threshold == undefined ? 1 : min_threshold;
+    min_threshold = min_threshold === undefined ? 1 : min_threshold;
     return exp - Date.now() < min_threshold * 60;
   };
   if (hasExpired(token)) {
@@ -79,6 +69,15 @@ const tokenCheck = async (token, onSuccess, onFail) => {
     onSuccess(token);
   }
 };
+
+export const {
+  getAuth,
+  onAuthSuccess,
+  onAuthFail,
+  clearData,
+} = authSlice.actions;
+
+export const authSelector = (state) => state.auth;
 
 export const fetchUserDetail = (url) => (dispatch) => {
   const token = localStorage.getItem('token');
@@ -136,11 +135,11 @@ export const logout = (url) => async (dispatch) => {
   if (token) {
     await tokenCheck(
       token,
-      async () =>
+      async (newToken) =>
         await axios
           .post(url, {
             headers: {
-              Authorization: `Bearer ${token}`,
+              Authorization: `Bearer ${newToken}`,
             },
           })
           .then((res) => {
