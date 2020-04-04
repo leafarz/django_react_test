@@ -54,7 +54,6 @@ export const fetchUserDetail = (url) => async (dispatch) => {
         },
       })
       .then((res) => {
-        console.log(res);
         dispatch(onAuthSuccess(res.data.username));
       })
       .catch((err) => {
