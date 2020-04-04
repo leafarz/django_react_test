@@ -5,7 +5,6 @@ import { useSelector } from 'react-redux';
 
 const GridRow = (props) => {
   const page = useSelector(pageSelector);
-  const category = props.data.category;
   const items = props.data.items;
   const start = page * props.data.displayCount;
   const end = start + props.data.displayCount;
