@@ -10,6 +10,8 @@ import {
 } from './../../slices/auth';
 import { useDispatch, useSelector } from 'react-redux';
 
+import config from './../../config';
+
 const NavBar = () => {
   const dispatch = useDispatch();
   const [state, setState] = useState({ username: '', password: '' });
@@ -32,22 +34,18 @@ const NavBar = () => {
   }, [loading, hasErrors]);
 
   useEffect(() => {
-    dispatch(fetchUserDetail('http://127.0.0.1:8000/api/auth/user/'));
+    dispatch(fetchUserDetail(`${config.baseurl}/api/auth/user/`));
   }, [dispatch]);
 
   const onHandleSubmit = (e) => {
     e.preventDefault();
     dispatch(
-      login(
-        state.username,
-        state.password,
-        'http://127.0.0.1:8000/api/auth/login/'
-      )
+      login(state.username, state.password, `${config.baseurl}/api/auth/login/`)
     );
   };
 
   const onHandleLogout = (e) => {
-    dispatch(logout('http://127.0.0.1:8000/api/auth/logout/'));
+    dispatch(logout(`${config.baseurl}/api/auth/logout/`));
   };
 
   const onHandleChange = (e) => {

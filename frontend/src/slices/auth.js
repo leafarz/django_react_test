@@ -1,5 +1,8 @@
 import axios from 'axios';
+import config from './../config';
 import { createSlice } from '@reduxjs/toolkit';
+
+const jwtDecode = require('jwt-decode');
 
 const authSlice = createSlice({
   name: 'auth',
@@ -43,25 +46,62 @@ export const {
 
 export const authSelector = (state) => state.auth;
 
-export const fetchUserDetail = (url) => async (dispatch) => {
-  const token = localStorage.getItem('token');
-  if (token) {
-    dispatch(getAuth());
-    await axios
-      .get(url, {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      })
+const tokenCheck = async (token, onSuccess, onFail) => {
+  const refresh_url = `${config.baseurl}/api/auth/token/refresh/`;
+  const hasExpired = (token, min_threshold) => {
+    const exp = jwtDecode(token)['exp'];
+    const diff = exp - Date.now();
+    min_threshold = min_threshold == undefined ? 1 : min_threshold;
+    return exp - Date.now() < min_threshold * 60;
+  };
+  if (hasExpired(token)) {
+    axios
+      .post(
+        refresh_url,
+        JSON.stringify({
+          refresh: localStorage.getItem('refreshToken'),
+        }),
+        {
+          headers: {
+            'Content-Type': 'application/json',
+          },
+        }
+      )
       .then((res) => {
-        dispatch(onAuthSuccess(res.data.username));
+        localStorage.setItem('token', res.data.access);
+        onSuccess(res.data.access);
       })
       .catch((err) => {
         console.log(err);
-        dispatch(onAuthFail());
+        onFail();
       });
   } else {
-    dispatch(onAuthFail());
+    onSuccess(token);
+  }
+};
+
+export const fetchUserDetail = (url) => (dispatch) => {
+  const token = localStorage.getItem('token');
+  if (token) {
+    dispatch(getAuth());
+    tokenCheck(
+      token,
+      (newToken) =>
+        axios
+          .get(url, {
+            headers: {
+              Authorization: `Bearer ${newToken}`,
+            },
+          })
+          .then((res) => {
+            dispatch(onAuthSuccess(res.data.username));
+          })
+          .catch((err) => {
+            console.log(err);
+            dispatch(onAuthFail());
+          }),
+      () => dispatch(onAuthFail())
+    );
   }
 };
 
@@ -94,18 +134,23 @@ export const logout = (url) => async (dispatch) => {
   dispatch(getAuth());
   const token = localStorage.getItem('token');
   if (token) {
-    await axios
-      .post(url, {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      })
-      .then((res) => {
-        dispatch(clearData());
-      })
-      .catch((err) => {
-        console.error(err);
-      });
+    await tokenCheck(
+      token,
+      async () =>
+        await axios
+          .post(url, {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          })
+          .then((res) => {
+            dispatch(clearData());
+          })
+          .catch((err) => {
+            console.error(err);
+          }),
+      () => dispatch(clearData())
+    );
   }
 };
 
