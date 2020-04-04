@@ -1,4 +1,5 @@
 import authReducer from './auth';
+import categoryReducer from './category';
 import { combineReducers } from 'redux';
 import itemReducer from './item';
 import itemsReducer from './items';
@@ -9,6 +10,7 @@ const rootReducer = combineReducers({
   items: itemsReducer,
   page: pageReducer,
   auth: authReducer,
+  category: categoryReducer,
 });
 
 export default rootReducer;

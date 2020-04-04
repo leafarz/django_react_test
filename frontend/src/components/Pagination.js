@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from 'react-redux';
 
 import React from 'react';
 
-const Pagination = props => {
+const Pagination = (props) => {
   const dispatch = useDispatch();
   const currPage = useSelector(pageSelector);
   const maxPages = Math.ceil(props.data.length / props.data.displayCount);
@@ -21,7 +21,7 @@ const Pagination = props => {
             <span className='sr-only'>Previous</span>
           </button>
         </li>
-        {[...Array(maxPages).keys()].map(i => {
+        {[...Array(maxPages).keys()].map((i) => {
           return (
             <li
               className={`page-item ${i === currPage ? 'active' : ''}`}

@@ -3,9 +3,9 @@ import React from 'react';
 import { pageSelector } from './../slices/page';
 import { useSelector } from 'react-redux';
 
-const GridRow = props => {
+const GridRow = (props) => {
   const page = useSelector(pageSelector);
-
+  const category = props.data.category;
   const items = props.data.items;
   const start = page * props.data.displayCount;
   const end = start + props.data.displayCount;
@@ -19,7 +19,7 @@ const GridRow = props => {
   };
   return (
     <div className='row wow fadeIn'>
-      {getCards().map(data => (
+      {getCards().map((data) => (
         <Card data={data} key={`${data.category}_${data.label}`} />
       ))}
     </div>

@@ -1,7 +1,14 @@
-import React from 'react';
+import { categorySelector, setCategoryDispatch } from './../slices/category';
+import { useDispatch, useSelector } from 'react-redux';
 
-const buttons = ['All', 'Shirts', 'Sportwear', 'Outwears'];
+import React from 'react';
+import { setPageDispatch } from './../slices/page';
+
+const buttons = ['All', 'Shirt', 'Sport Wear', 'Outwear'];
 const BodyNav = () => {
+  const dispatch = useDispatch();
+  const currCategory = useSelector(categorySelector);
+
   return (
     <nav className='navbar navbar-expand-lg navbar-dark mdb-color lighten-3 mt-3 mb-5'>
       <span className='navbar-brand'>Categories:</span>
@@ -22,7 +29,17 @@ const BodyNav = () => {
         <ul className='navbar-nav mr-auto'>
           {buttons.map((category) => (
             <li className='nav-item active'>
-              <button className='nav-link btn btn-mdb-color'>{category}</button>
+              <button
+                className={`nav-link btn ${
+                  category === currCategory ? 'btn-mdb-color' : ''
+                }`}
+                onClick={() => {
+                  dispatch(setCategoryDispatch(category));
+                  dispatch(setPageDispatch(0));
+                }}
+              >
+                {category}
+              </button>
             </li>
           ))}
         </ul>
