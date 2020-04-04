@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { fetchItem, itemSelector } from './../slices/item';
 import { useDispatch, useSelector } from 'react-redux';
 
@@ -8,7 +8,7 @@ const Product = () => {
   const params = useParams();
   const { item, loading } = useSelector(itemSelector);
   const dispatch = useDispatch();
-
+  const [amount, setAmount] = useState(1);
   useEffect(() => {
     dispatch(fetchItem(params.id));
   }, [dispatch, params.id]);
@@ -18,14 +18,22 @@ const Product = () => {
     if (item.curr_price !== item.original_price) {
       components = [
         ...components,
-        <span className='mr-1'>
+        <span key='deleted-price' className='mr-1'>
           <del>${item.original_price}</del>
         </span>,
       ];
     }
-    components = [...components, <span>${item.curr_price}</span>];
+    components = [
+      ...components,
+      <span key='original-price'>${item.curr_price}</span>,
+    ];
     return React.createElement(React.Fragment, null, components);
   };
+
+  const onHandleChange = (e) => {
+    setAmount(Math.max(1, e.target.value));
+  };
+
   return (
     !loading && (
       <div>
@@ -64,7 +72,8 @@ const Product = () => {
                   <form className='d-flex justify-content-left'>
                     <input
                       type='number'
-                      value='1'
+                      value={amount}
+                      onChange={onHandleChange}
                       aria-label='Search'
                       className='form-control'
                       style={{ width: '100px' }}

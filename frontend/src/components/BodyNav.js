@@ -28,7 +28,7 @@ const BodyNav = () => {
       <div className='collapse navbar-collapse' id='basicExampleNav'>
         <ul className='navbar-nav mr-auto'>
           {buttons.map((category) => (
-            <li className='nav-item active'>
+            <li key={category} className='nav-item active'>
               <button
                 className={`nav-link btn ${
                   category === currCategory ? 'btn-mdb-color' : ''

@@ -19,8 +19,8 @@ const Home = () => {
 
   const renderItems = () => {
     const displayCount = 8;
-    let length = Object.keys(items).length;
     let filteredItems = items;
+    let length = Object.keys(items).length;
     if (loading || length === 0) {
       return;
     }
@@ -31,6 +31,7 @@ const Home = () => {
     if (length === 0) {
       return;
     }
+
     return (
       <React.Fragment>
         <section className='text-center mb-4'>
