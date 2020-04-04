@@ -1,5 +1,4 @@
 import axios from 'axios';
-import config from './../config';
 import { createSlice } from '@reduxjs/toolkit';
 
 const jwtDecode = require('jwt-decode');
@@ -38,7 +37,7 @@ const authSlice = createSlice({
 });
 
 const tokenCheck = async (token, onSuccess, onFail) => {
-  const refresh_url = `${config.baseurl}/api/auth/token/refresh/`;
+  const refresh_url = `${process.env.REACT_APP_BASEURL}/api/auth/token/refresh/`;
   const hasExpired = (token, min_threshold) => {
     const exp = jwtDecode(token)['exp'];
     min_threshold = min_threshold === undefined ? 1 : min_threshold;

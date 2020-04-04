@@ -1,4 +1,3 @@
-import config from './../config';
 import { createSlice } from '@reduxjs/toolkit';
 
 export const initialState = {
@@ -33,7 +32,7 @@ export function fetchItem(id) {
   return async (dispatch) => {
     dispatch(getItem());
     try {
-      await fetch(`${config.baseurl}/api/item/${id}`)
+      await fetch(`${process.env.REACT_APP_BASEURL}/api/item/${id}`)
         .then((res) => res.json())
         .then((res) => {
           dispatch(getItemSuccess(res));
