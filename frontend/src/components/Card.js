@@ -22,9 +22,13 @@ const Card = (props) => {
                 {props.data.label}
 
                 {props.data.tag && (
-                  <span className={`badge badge-pill ${props.data.tag}-color`}>
-                    {props.data.tag_display}
-                  </span>
+                  <div>
+                    <span
+                      className={`badge badge-pill ${props.data.tag}-color`}
+                    >
+                      {props.data.tag_display}
+                    </span>
+                  </div>
                 )}
               </Link>
             </strong>
