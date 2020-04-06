@@ -181,28 +181,32 @@ const NavBar = () => {
                   <div className='nav-link waves-effect'>Home</div>
                 </li>
               </NavLink>
-              <NavLink to='/checkout' exact activeClassName='active-link'>
-                <li className='nav-item'>
-                  <div className='nav-link waves-effect'>Checkout</div>
-                </li>
-              </NavLink>
+              {username && (
+                <NavLink to='/checkout' exact activeClassName='active-link'>
+                  <li className='nav-item'>
+                    <div className='nav-link waves-effect'>Checkout</div>
+                  </li>
+                </NavLink>
+              )}
             </ul>
 
             {/* <!-- Right --> */}
             <ul className='navbar-nav nav-flex-icons'>
               {renderLogin()}
-              <Link to='/checkout'>
-                <li className='nav-item'>
-                  <div className='nav-link waves-effect'>
-                    <span className='badge red z-depth-1 mr-1'> 1 </span>
-                    <i className='fas fa-shopping-cart'></i>
-                    <span className='clearfix d-none d-sm-inline-block'>
-                      {' '}
-                      Cart{' '}
-                    </span>
-                  </div>
-                </li>
-              </Link>
+              {username && (
+                <Link to='/checkout'>
+                  <li className='nav-item'>
+                    <div className='nav-link waves-effect'>
+                      <span className='badge red z-depth-1 mr-1'> 1 </span>
+                      <i className='fas fa-shopping-cart'></i>
+                      <span className='clearfix d-none d-sm-inline-block'>
+                        {' '}
+                        Cart{' '}
+                      </span>
+                    </div>
+                  </li>
+                </Link>
+              )}
             </ul>
           </div>
         </div>
