@@ -24,6 +24,7 @@ INSTALLED_APPS = [
     "corsheaders",
     "commands",
     "item",
+    "cart",
 ]
 
 REST_FRAMEWORK = {

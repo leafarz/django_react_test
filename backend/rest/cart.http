@@ -1,0 +1,18 @@
+### Get all items
+GET http://127.0.0.1:8000/api/cart/ HTTP/1.1
+
+### Post item
+POST http://127.0.0.1:8000/api/cart/ HTTP/1.1
+Content-Type: application/json
+# Authorization: Bearer ---
+
+{
+    "quantity": 1,
+    "owner": 1,
+    "item": 1
+}
+
+### Get cart from user
+GET http://127.0.0.1:8000/api/usercart HTTP/1.1
+Authorization: Bearer ---
+Content-Type: application/json

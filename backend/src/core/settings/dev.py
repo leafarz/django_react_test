@@ -1,3 +1,5 @@
+from datetime import timedelta
+
 from .base import *
 
 DEBUG = True
@@ -16,3 +18,6 @@ DATABASES = {
 }
 
 JWT_AUTH_COOKIE = "JWT_AUTH_COOKIE"
+SIMPLE_JWT = {
+    "ACCESS_TOKEN_LIFETIME": timedelta(minutes=30),
+}

@@ -1,14 +1,15 @@
 from django.contrib import admin
 from django.urls import include, path
 from rest_framework import routers
-from item.views import ItemViewSet
 from rest_framework_simplejwt import views as jwt_views
+
+from cart.views import CartViewSet, UserCartView
+from item.views import ItemViewSet
 
 router = routers.DefaultRouter()
 router.register("api/item", ItemViewSet)
+router.register("api/cart", CartViewSet)
 
-# Wire up our API using automatic URL routing.
-# Additionally, we include login URLs for the browsable API.
 urlpatterns = [
     path("", include(router.urls)),
     path("admin/", admin.site.urls),
@@ -17,6 +18,7 @@ urlpatterns = [
     path(
         "api/auth/token/refresh/",
         jwt_views.TokenRefreshView.as_view(),
-        name="token_refresh",
+        name="auth.refresh",
     ),
+    path("api/usercart", UserCartView.as_view(), name="cart.usercart"),
 ]
