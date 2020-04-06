@@ -1,7 +1,6 @@
 import axios from 'axios';
 import { createSlice } from '@reduxjs/toolkit';
-
-const jwtDecode = require('jwt-decode');
+import { tokenCheck } from './../common/authHelper';
 
 const authSlice = createSlice({
   name: 'auth',
@@ -36,39 +35,6 @@ const authSlice = createSlice({
   },
 });
 
-const tokenCheck = async (token, onSuccess, onFail) => {
-  const refresh_url = `${process.env.REACT_APP_BASEURL}/api/auth/token/refresh/`;
-  const hasExpired = (token, min_threshold) => {
-    const exp = jwtDecode(token)['exp'];
-    min_threshold = min_threshold === undefined ? 1 : min_threshold;
-    return exp - Date.now() < min_threshold * 60;
-  };
-  if (hasExpired(token)) {
-    axios
-      .post(
-        refresh_url,
-        JSON.stringify({
-          refresh: localStorage.getItem('refreshToken'),
-        }),
-        {
-          headers: {
-            'Content-Type': 'application/json',
-          },
-        }
-      )
-      .then((res) => {
-        localStorage.setItem('token', res.data.access);
-        onSuccess(res.data.access);
-      })
-      .catch((err) => {
-        console.log(err);
-        onFail();
-      });
-  } else {
-    onSuccess(token);
-  }
-};
-
 export const {
   getAuth,
   onAuthSuccess,
@@ -78,11 +44,11 @@ export const {
 
 export const authSelector = (state) => state.auth;
 
-export const fetchUserDetail = (url) => (dispatch) => {
+export const fetchUserDetail = (url) => async (dispatch) => {
   const token = localStorage.getItem('token');
   if (token) {
     dispatch(getAuth());
-    tokenCheck(
+    await tokenCheck(
       token,
       (newToken) =>
         axios
