@@ -1,13 +1,15 @@
 import axios from 'axios';
 
 const jwtDecode = require('jwt-decode');
+const tokenExpInMins = 5;
 
 export const tokenCheck = async (token, onSuccess, onFail) => {
   const refresh_url = `${process.env.REACT_APP_BASEURL}/api/auth/token/refresh/`;
   const hasExpired = (token) => {
     const exp = jwtDecode(token)['exp'];
-    return exp - Date.now() < 60;
+    return exp - Date.now() < tokenExpInMins * 60;
   };
+
   if (hasExpired(token)) {
     axios
       .post(

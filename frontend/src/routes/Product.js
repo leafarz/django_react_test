@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { fetchItem, itemSelector } from './../slices/item';
 import { useDispatch, useSelector } from 'react-redux';
 
+import { addToCart } from './../slices/cart';
 import { useParams } from 'react-router-dom';
 
 const Product = () => {
@@ -33,6 +34,11 @@ const Product = () => {
 
   const onHandleChange = (e) => {
     setAmount(Math.max(1, e.target.value));
+  };
+
+  const onHandleAddToCart = (e) => {
+    e.preventDefault();
+    dispatch(addToCart(parseInt(params.slug), amount));
   };
 
   return (
@@ -82,6 +88,7 @@ const Product = () => {
                     <button
                       className='btn btn-primary btn-md my-0 p'
                       type='submit'
+                      onClick={onHandleAddToCart}
                     >
                       Add to cart
                       <i className='fas fa-shopping-cart ml-1'></i>

@@ -57,7 +57,6 @@ export const fetchCart = () => async (dispatch) => {
             dispatch(onGetCartSuccess(res.data));
           })
           .catch((err) => {
-            console.log(err);
             dispatch(onGetCartFail());
           }),
       () => dispatch(onGetCartFail())
@@ -73,8 +72,8 @@ export const addToCart = (itemId, quantity) => async (dispatch) => {
       token,
       (newToken) =>
         axios
-          .get(
-            `${process.env.REACT_APP_BASEURL}/api/cart`,
+          .post(
+            `${process.env.REACT_APP_BASEURL}/api/cart/`,
             JSON.stringify({
               item: itemId,
               quantity: quantity,
@@ -86,8 +85,8 @@ export const addToCart = (itemId, quantity) => async (dispatch) => {
               },
             }
           )
-          .then((res) => {
-            dispatch(onGetCartSuccess(res.data));
+          .then(() => {
+            dispatch(fetchCart());
           })
           .catch((err) => {
             console.log(err);

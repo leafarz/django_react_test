@@ -312,7 +312,7 @@ const Checkout = () => {
               <h4 className='d-flex justify-content-between align-items-center mb-3'>
                 <span className='text-muted'>Your cart</span>
                 <span className='badge badge-secondary badge-pill'>
-                  {cart.length}
+                  {cart.reduce((total, x) => total + x.quantity, 0)}
                 </span>
               </h4>
 

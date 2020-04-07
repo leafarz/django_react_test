@@ -10,7 +10,7 @@ const Unauthorized = (props) => {
     if (username) {
       props.history.push('/');
     }
-  }, [username]);
+  }, [username, props.history]);
 
   return (
     <div>
