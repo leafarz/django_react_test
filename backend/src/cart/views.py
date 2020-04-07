@@ -10,14 +10,29 @@ from cart.serializers import CartSerializer
 from item.models import Item
 
 
-class CartViewSet(viewsets.ModelViewSet):
-    queryset = Cart.objects.all()
-    serializer_class = CartSerializer
+class CartView(APIView):
     permission_classes = [IsAuthenticated]
+
+    def get(self, request):
+        cart = Cart.objects.all()
+        return Response(cart.values())
+
+    def post(self, request):
+        payload = request.auth.payload
+
+        user_id = payload["user_id"]
+        user = User.objects.get(id=user_id)
+
+        item_id = request.data["item"]
+        item = Item.objects.get(id=item_id)
+        quantity = request.data["quantity"]
+        cart = Cart(owner=user, item=item, quantity=quantity)
+        cart.save()
+        return Response(CartSerializer(instance=cart).data)
 
 
 class UserCartView(APIView):
-    permission_classes = [AllowAny]
+    permission_classes = [IsAuthenticated]
 
     def get(self, request):
         payload = request.auth.payload
