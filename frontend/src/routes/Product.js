@@ -9,9 +9,10 @@ const Product = () => {
   const { item, loading } = useSelector(itemSelector);
   const dispatch = useDispatch();
   const [amount, setAmount] = useState(1);
+
   useEffect(() => {
-    dispatch(fetchItem(params.id));
-  }, [dispatch, params.id]);
+    dispatch(fetchItem(params.slug));
+  }, [dispatch, params.slug]);
 
   const renderPrice = () => {
     let components = [];

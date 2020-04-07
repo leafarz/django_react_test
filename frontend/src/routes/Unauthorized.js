@@ -1,6 +1,17 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 
-const Unauthorized = () => {
+import { authSelector } from './../slices/auth';
+import { useSelector } from 'react-redux';
+
+const Unauthorized = (props) => {
+  const { username } = useSelector(authSelector);
+
+  useEffect(() => {
+    if (username) {
+      props.history.push('/');
+    }
+  }, [username]);
+
   return (
     <div>
       <main className='mt-5 pt-4'>

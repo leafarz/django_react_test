@@ -8,12 +8,14 @@ import {
   login,
   logout,
 } from './../../slices/auth';
+import { cartSelector, clearCartDispatch } from './../../slices/cart';
 import { useDispatch, useSelector } from 'react-redux';
 
-const NavBar = () => {
+const NavBar = (props) => {
   const dispatch = useDispatch();
   const [state, setState] = useState({ username: '', password: '' });
   const { username, loading, hasErrors } = useSelector(authSelector);
+  const { cart } = useSelector(cartSelector);
   let closeRef = useRef(null);
 
   useEffect(() => {
@@ -50,6 +52,7 @@ const NavBar = () => {
 
   const onHandleLogout = (e) => {
     dispatch(logout(`${process.env.REACT_APP_BASEURL}/api/auth/logout/`));
+    dispatch(clearCartDispatch());
   };
 
   const onHandleChange = (e) => {
@@ -197,7 +200,10 @@ const NavBar = () => {
                 <Link to='/checkout'>
                   <li className='nav-item'>
                     <div className='nav-link waves-effect'>
-                      <span className='badge red z-depth-1 mr-1'> 1 </span>
+                      <span className='badge red z-depth-1 mr-1'>
+                        {' '}
+                        {cart.reduce((total, x) => total + x.quantity, 0)}{' '}
+                      </span>
                       <i className='fas fa-shopping-cart'></i>
                       <span className='clearfix d-none d-sm-inline-block'>
                         {' '}

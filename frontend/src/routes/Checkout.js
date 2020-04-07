@@ -1,14 +1,9 @@
-import React, { useEffect } from 'react';
-import { cartSelector, fetchCart } from './../slices/cart';
-import { useDispatch, useSelector } from 'react-redux';
+import React from 'react';
+import { cartSelector } from './../slices/cart';
+import { useSelector } from 'react-redux';
 
 const Checkout = () => {
-  const dispatch = useDispatch();
-  const { cart, loading, hasErrors } = useSelector(cartSelector);
-
-  useEffect(() => {
-    dispatch(fetchCart());
-  }, [dispatch]);
+  const { cart } = useSelector(cartSelector);
 
   const getCart = () => {
     let components = [];
@@ -19,7 +14,10 @@ const Checkout = () => {
       totalPrice += price;
       components = [
         ...components,
-        <li className='list-group-item d-flex justify-content-between lh-condensed'>
+        <li
+          className='list-group-item d-flex justify-content-between lh-condensed'
+          key={`${c.item.label}_${c.item.category}`}
+        >
           <div>
             <h6 className='my-0'>
               {c.item.label} ({c.quantity})
@@ -32,7 +30,10 @@ const Checkout = () => {
     });
     components = [
       ...components,
-      <li className='list-group-item d-flex justify-content-between'>
+      <li
+        className='list-group-item d-flex justify-content-between'
+        key='total_price'
+      >
         <span>Total (USD)</span>
         <strong>${totalPrice}</strong>
       </li>,
