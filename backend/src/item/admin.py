@@ -1,10 +1,12 @@
 from django.contrib import admin
+
 from item.models import Item
 
 
 class ItemAdmin(admin.ModelAdmin):
     list_display = (
         "label",
+        "id",
         "category",
         "tag",
         "tag_display",

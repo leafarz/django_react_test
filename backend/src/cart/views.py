@@ -26,7 +26,13 @@ class CartView(APIView):
         item_id = request.data["item"]
         item = Item.objects.get(id=item_id)
         quantity = request.data["quantity"]
-        cart = Cart(owner=user, item=item, quantity=quantity)
+
+        try:
+            cart = Cart.objects.get(owner=user, item=item)
+            cart.quantity += quantity
+        except:
+            cart = Cart(owner=user, item=item, quantity=quantity)
+
         cart.save()
         return Response(CartSerializer(instance=cart).data)
 
@@ -37,10 +43,10 @@ class UserCartView(APIView):
     def get(self, request):
         payload = request.auth.payload
         user_id = payload["user_id"]
-        carts = Cart.objects.filter(owner=user_id)
-        item_quantities = list(carts.values_list("quantity", flat=True))
-        item_ids = list(carts.values_list("id", flat=True))
+        carts = Cart.objects.filter(owner_id=user_id)
+        item_ids = list(carts.values_list("item_id", flat=True))
         item_list = list(Item.objects.filter(id__in=item_ids).values())
+        item_quantities = list(carts.values_list("quantity", flat=True))
 
         json_data = [
             {"item": item, "quantity": quantity}
