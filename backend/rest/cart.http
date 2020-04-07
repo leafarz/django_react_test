@@ -16,3 +16,7 @@ Authorization: Bearer
 GET http://127.0.0.1:8000/api/usercart/ HTTP/1.1
 Authorization: Bearer 
 Content-Type: application/json
+
+### Clear cart
+POST http://127.0.0.1:8000/api/usercart/deleteall HTTP/1.1
+Authorization: Bearer 

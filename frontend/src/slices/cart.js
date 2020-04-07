@@ -24,7 +24,7 @@ const cartSlice = createSlice({
       state.loading = false;
       state.hasErrors = true;
     },
-    clearCart: (state) => {
+    onClearCart: (state) => {
       state.cart = [];
       state.loading = false;
       state.hasErrors = false;
@@ -36,7 +36,7 @@ export const {
   getCart,
   onGetCartSuccess,
   onGetCartFail,
-  clearCart,
+  onClearCart,
 } = cartSlice.actions;
 export const cartSelector = (state) => state.cart;
 
@@ -97,8 +97,29 @@ export const addToCart = (itemId, quantity) => async (dispatch) => {
   }
 };
 
-export const clearCartDispatch = () => (dispatch) => {
-  dispatch(clearCart());
+export const clearCartDispatch = () => async (dispatch) => {
+  const token = localStorage.getItem('token');
+  if (token) {
+    dispatch(getCart());
+    await tokenCheck(
+      token,
+      (newToken) =>
+        axios
+          .get(`${process.env.REACT_APP_BASEURL}/api/usercart/deleteall`, {
+            headers: {
+              Authorization: `Bearer ${newToken}`,
+            },
+          })
+          .then(() => {
+            dispatch(fetchCart());
+          })
+          .catch((err) => {
+            console.log(err);
+            dispatch(onGetCartFail());
+          }),
+      () => dispatch(onGetCartFail())
+    );
+  }
 };
 
 export default cartSlice.reducer;

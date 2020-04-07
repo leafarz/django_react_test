@@ -1,6 +1,6 @@
 import jwt
 from django.contrib.auth.models import User
-from rest_framework import viewsets
+from django.core import serializers
 from rest_framework.permissions import AllowAny, IsAuthenticated
 from rest_framework.response import Response
 from rest_framework.views import APIView
@@ -53,3 +53,16 @@ class UserCartView(APIView):
             for item, quantity in zip(item_list, item_quantities)
         ]
         return Response(json_data)
+
+
+class ClearCartView(APIView):
+    permission_classes = [IsAuthenticated]
+
+    def get(self, request):
+        payload = request.auth.payload
+
+        user_id = payload["user_id"]
+        cart = Cart.objects.filter(owner_id=user_id)
+        json = serializers.serialize("json", cart)
+        cart.delete()
+        return Response(json)

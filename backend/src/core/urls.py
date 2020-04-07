@@ -3,7 +3,7 @@ from django.urls import include, path
 from rest_framework import routers
 from rest_framework_simplejwt import views as jwt_views
 
-from cart.views import CartView, UserCartView
+from cart.views import CartView, ClearCartView, UserCartView
 from item.views import ItemViewSet
 
 router = routers.DefaultRouter()
@@ -21,4 +21,5 @@ urlpatterns = [
     ),
     path("api/cart/", CartView.as_view(), name="cart.cart"),
     path("api/usercart/", UserCartView.as_view(), name="cart.usercart"),
+    path("api/usercart/deleteall", ClearCartView.as_view(), name="cart.deleteall"),
 ]

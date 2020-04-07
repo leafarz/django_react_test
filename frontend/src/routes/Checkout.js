@@ -1,9 +1,11 @@
+import { cartSelector, clearCartDispatch } from './../slices/cart';
+import { useDispatch, useSelector } from 'react-redux';
+
 import React from 'react';
-import { cartSelector } from './../slices/cart';
-import { useSelector } from 'react-redux';
 
 const Checkout = () => {
   const { cart } = useSelector(cartSelector);
+  const dispatch = useDispatch();
 
   const getCart = () => {
     let components = [];
@@ -40,6 +42,11 @@ const Checkout = () => {
     ];
     return React.createElement(React.Fragment, null, components);
   };
+
+  const onHandleCheckout = (e) => {
+    e.preventDefault();
+    dispatch(clearCartDispatch());
+  };
   return (
     <div>
       <main className='mt-5 pt-4'>
@@ -50,6 +57,9 @@ const Checkout = () => {
             <div className='col-md-8 mb-4'>
               <div className='card'>
                 <form className='card-body'>
+                  <p className='text-danger'>
+                    * Form not required to be filled up
+                  </p>
                   <div className='row'>
                     <div className='col-md-6 mb-2'>
                       <div className='md-form '>
@@ -76,7 +86,6 @@ const Checkout = () => {
                       </div>
                     </div>
                   </div>
-
                   <div className='md-form input-group pl-0 mb-5'>
                     <div className='input-group-prepend'>
                       <span className='input-group-text' id='basic-addon1'>
@@ -86,54 +95,37 @@ const Checkout = () => {
                     <input
                       type='text'
                       className='form-control py-0'
-                      placeholder='Username'
                       aria-describedby='basic-addon1'
                     />
                   </div>
-
                   <div className='md-form mb-5'>
-                    <input
-                      type='text'
-                      id='email'
-                      className='form-control'
-                      placeholder='youremail@example.com'
-                    />
+                    <input type='text' id='email' className='form-control' />
                     <label htmlFor='email' className=''>
                       Email (optional)
                     </label>
                   </div>
-
                   <div className='md-form mb-5'>
-                    <input
-                      type='text'
-                      id='address'
-                      className='form-control'
-                      placeholder='1234 Main St'
-                    />
+                    <input type='text' id='address' className='form-control' />
                     <label htmlFor='address' className=''>
                       Address
                     </label>
                   </div>
-
                   <div className='md-form mb-5'>
                     <input
                       type='text'
                       id='address-2'
                       className='form-control'
-                      placeholder='Apartment or suite'
                     />
                     <label htmlFor='address-2' className=''>
                       Address 2 (optional)
                     </label>
                   </div>
-
                   <div className='row'>
                     <div className='col-lg-4 col-md-12 mb-4'>
                       <label htmlFor='country'>Country</label>
                       <select
                         className='custom-select d-block w-100'
                         id='country'
-                        required
                       >
                         <option value=''>Choose...</option>
                         <option>United States</option>
@@ -148,7 +140,6 @@ const Checkout = () => {
                       <select
                         className='custom-select d-block w-100'
                         id='state'
-                        required
                       >
                         <option value=''>Choose...</option>
                         <option>California</option>
@@ -160,19 +151,11 @@ const Checkout = () => {
 
                     <div className='col-lg-4 col-md-6 mb-4'>
                       <label htmlFor='zip'>Zip</label>
-                      <input
-                        type='text'
-                        className='form-control'
-                        id='zip'
-                        placeholder=''
-                        required
-                      />
+                      <input type='text' className='form-control' id='zip' />
                       <div className='invalid-feedback'>Zip code required.</div>
                     </div>
                   </div>
-
                   <hr />
-
                   <div className='custom-control custom-checkbox'>
                     <input
                       type='checkbox'
@@ -196,111 +179,12 @@ const Checkout = () => {
                       Save this information for next time
                     </label>
                   </div>
-
                   <hr />
-
-                  <div className='d-block my-3'>
-                    <div className='custom-control custom-radio'>
-                      <input
-                        id='credit'
-                        name='paymentMethod'
-                        type='radio'
-                        className='custom-control-input'
-                        checked
-                        required
-                      />
-                      <label className='custom-control-label' htmlFor='credit'>
-                        Credit card
-                      </label>
-                    </div>
-                    <div className='custom-control custom-radio'>
-                      <input
-                        id='debit'
-                        name='paymentMethod'
-                        type='radio'
-                        className='custom-control-input'
-                        required
-                      />
-                      <label className='custom-control-label' htmlFor='debit'>
-                        Debit card
-                      </label>
-                    </div>
-                    <div className='custom-control custom-radio'>
-                      <input
-                        id='paypal'
-                        name='paymentMethod'
-                        type='radio'
-                        className='custom-control-input'
-                        required
-                      />
-                      <label className='custom-control-label' htmlFor='paypal'>
-                        Paypal
-                      </label>
-                    </div>
-                  </div>
-                  <div className='row'>
-                    <div className='col-md-6 mb-3'>
-                      <label htmlFor='cc-name'>Name on card</label>
-                      <input
-                        type='text'
-                        className='form-control'
-                        id='cc-name'
-                        placeholder=''
-                        required
-                      />
-                      <small className='text-muted'>
-                        Full name as displayed on card
-                      </small>
-                      <div className='invalid-feedback'>
-                        Name on card is required
-                      </div>
-                    </div>
-                    <div className='col-md-6 mb-3'>
-                      <label htmlFor='cc-number'>Credit card number</label>
-                      <input
-                        type='text'
-                        className='form-control'
-                        id='cc-number'
-                        placeholder=''
-                        required
-                      />
-                      <div className='invalid-feedback'>
-                        Credit card number is required
-                      </div>
-                    </div>
-                  </div>
-                  <div className='row'>
-                    <div className='col-md-3 mb-3'>
-                      <label htmlFor='cc-expiration'>Expiration</label>
-                      <input
-                        type='text'
-                        className='form-control'
-                        id='cc-expiration'
-                        placeholder=''
-                        required
-                      />
-                      <div className='invalid-feedback'>
-                        Expiration date required
-                      </div>
-                    </div>
-                    <div className='col-md-3 mb-3'>
-                      <label htmlFor='cc-expiration'>CVV</label>
-                      <input
-                        type='text'
-                        className='form-control'
-                        id='cc-cvv'
-                        placeholder=''
-                        required
-                      />
-                      <div className='invalid-feedback'>
-                        Security code required
-                      </div>
-                    </div>
-                  </div>
                   <hr className='mb-4' />
                   <button
                     className='btn btn-primary btn-lg btn-block'
                     type='submit'
+                    onClick={onHandleCheckout}
                   >
                     Continue to checkout
                   </button>
