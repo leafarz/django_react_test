@@ -105,7 +105,7 @@ export const clearCartDispatch = () => async (dispatch) => {
       token,
       (newToken) =>
         axios
-          .get(`${process.env.REACT_APP_BASEURL}/api/usercart/deleteall`, {
+          .get(`${process.env.REACT_APP_BASEURL}/api/usercart/deleteall/`, {
             headers: {
               Authorization: `Bearer ${newToken}`,
             },

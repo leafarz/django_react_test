@@ -1,4 +1,5 @@
 import os
+
 import django_heroku
 from decouple import config
 
@@ -17,6 +18,7 @@ INSTALLED_APPS = [
     "django.contrib.sites",
     "allauth",
     "allauth.account",
+    "allauth.socialaccount",
     "dj_rest_auth",
     "dj_rest_auth.registration",
     "rest_framework",
@@ -34,6 +36,7 @@ REST_FRAMEWORK = {
 SITE_ID = 1
 REST_USE_JWT = True
 EMAIL_BACKEND = "django.core.mail.backends.console.EmailBackend"
+ACCOUNT_EMAIL_VERIFICATION = "none"
 
 MIDDLEWARE = [
     "django.middleware.security.SecurityMiddleware",

@@ -7,20 +7,36 @@ import {
   fetchUserDetail,
   login,
   logout,
+  signUp,
 } from './../../slices/auth';
 import { cartSelector, clearCartDispatch } from './../../slices/cart';
 import { useDispatch, useSelector } from 'react-redux';
 
+const buttonStyle = {
+  border: 'none',
+  background: 'none',
+  outline: 'none',
+  fontWeight: 300,
+  padding: 0,
+};
+
 const NavBar = (props) => {
   const dispatch = useDispatch();
-  const [state, setState] = useState({ username: '', password: '' });
+  const [state, setState] = useState({
+    username: '',
+    password: '',
+    password2: '',
+    email: '',
+  });
   const { username, loading, hasErrors } = useSelector(authSelector);
   const { cart } = useSelector(cartSelector);
-  let closeRef = useRef(null);
+  const loginCloseRef = useRef(null);
+  const signUpCloseRef = useRef(null);
 
   useEffect(() => {
     if (username) {
-      closeRef.current.click();
+      loginCloseRef.current.click();
+      signUpCloseRef.current.click();
     }
   }, [username]);
 
@@ -29,7 +45,7 @@ const NavBar = (props) => {
       return;
     }
     if (!hasErrors) {
-      setState({ username: '', password: '' });
+      setState({ username: '', password: '', password2: '', email: '' });
     }
   }, [loading, hasErrors]);
 
@@ -39,13 +55,26 @@ const NavBar = (props) => {
     );
   }, [dispatch]);
 
-  const onHandleSubmit = (e) => {
+  const onHandleLogin = (e) => {
     e.preventDefault();
     dispatch(
       login(
         state.username,
         state.password,
         `${process.env.REACT_APP_BASEURL}/api/auth/login/`
+      )
+    );
+  };
+
+  const onHandleSignUp = (e) => {
+    e.preventDefault();
+    dispatch(
+      signUp(
+        state.username,
+        state.password,
+        state.password2,
+        state.email,
+        `${process.env.REACT_APP_BASEURL}/api/auth/registration/`
       )
     );
   };
@@ -77,21 +106,42 @@ const NavBar = (props) => {
         <li className='nav-item pr-4'>
           <div className='nav-link waves-effect'>
             <span className='clearfix d-none d-sm-inline-flex'>
-              <a onClick={onHandleLogout}>Logout</a>
+              <button onClick={onHandleLogout} style={buttonStyle}>
+                Logout
+              </button>
             </span>
           </div>
         </li>
       </React.Fragment>
     ) : (
-      <li className='nav-item pr-4'>
-        <div className='nav-link waves-effect'>
-          <span className='clearfix d-none d-sm-inline-block'>
-            <a data-toggle='modal' data-target='#modalLoginForm'>
-              Login
-            </a>
-          </span>
-        </div>
-      </li>
+      <React.Fragment>
+        <li className='nav-item pr-4'>
+          <div className='nav-link waves-effect'>
+            <span className='clearfix d-none d-sm-inline-block'>
+              <button
+                data-toggle='modal'
+                data-target='#modalLoginForm'
+                style={buttonStyle}
+              >
+                Login
+              </button>
+            </span>
+          </div>
+        </li>
+        <li className='nav-item pr-4'>
+          <div className='nav-link waves-effect'>
+            <span className='clearfix d-none d-sm-inline-block'>
+              <button
+                data-toggle='modal'
+                data-target='#modalSignUpForm'
+                style={buttonStyle}
+              >
+                SignUp
+              </button>
+            </span>
+          </div>
+        </li>
+      </React.Fragment>
     );
   };
 
@@ -114,7 +164,7 @@ const NavBar = (props) => {
                 className='close'
                 data-dismiss='modal'
                 aria-label='Close'
-                ref={closeRef}
+                ref={loginCloseRef}
               >
                 <span aria-hidden='true'>&times;</span>
               </button>
@@ -124,37 +174,121 @@ const NavBar = (props) => {
                 <i className='fas fa-user prefix grey-text'></i>
                 <input
                   type='text'
-                  id='defaultForm-user'
+                  id='defaultForm-user-login'
                   className='form-control'
                   name='username'
                   value={state.username}
                   onChange={onHandleChange}
                 />
-                <label htmlFor='defaultForm-user'>Your username</label>
+                <label htmlFor='defaultForm-user-login'>Your username</label>
               </div>
 
               <div className='md-form mb-4'>
                 <i className='fas fa-lock prefix grey-text'></i>
                 <input
                   type='password'
-                  id='defaultForm-pass'
+                  id='defaultForm-pass-login'
                   className='form-control'
                   name='password'
                   value={state.password}
                   onChange={onHandleChange}
                 />
-                <label htmlFor='defaultForm-pass'>Your password</label>
+                <label htmlFor='defaultForm-pass-login'>Your password</label>
               </div>
             </div>
 
             <div className='modal-footer d-flex justify-content-center'>
-              <button className='btn btn-default' onClick={onHandleSubmit}>
+              <button className='btn btn-default' onClick={onHandleLogin}>
                 Login
               </button>
             </div>
           </div>
         </div>
       </form>
+      <form
+        className='modal fade'
+        id='modalSignUpForm'
+        tabIndex='-1'
+        role='dialog'
+        aria-labelledby='myModalLabel'
+        aria-hidden='true'
+      >
+        <div className='modal-dialog' role='document'>
+          <div className='modal-content'>
+            <div className='modal-header text-center'>
+              <h4 className='modal-title w-100 font-weight-bold'>Sign up</h4>
+              <button
+                type='button'
+                className='close'
+                data-dismiss='modal'
+                aria-label='Close'
+                ref={signUpCloseRef}
+              >
+                <span aria-hidden='true'>&times;</span>
+              </button>
+            </div>
+            <div className='modal-body mx-3'>
+              <div className='md-form mb-4'>
+                <i className='fas fa-user prefix grey-text'></i>
+                <input
+                  type='text'
+                  id='defaultForm-user-signup'
+                  className='form-control'
+                  name='username'
+                  value={state.username}
+                  onChange={onHandleChange}
+                />
+                <label htmlFor='defaultForm-user-signup'>Your username</label>
+              </div>
+              <div className='md-form mb-4'>
+                <i className='fas fa-envelope prefix grey-text'></i>
+                <input
+                  type='text'
+                  id='defaultForm-email'
+                  className='form-control'
+                  name='email'
+                  value={state.email}
+                  onChange={onHandleChange}
+                />
+                <label htmlFor='defaultForm-user'>Your email</label>
+              </div>
+
+              <div className='md-form mb-4'>
+                <i className='fas fa-lock prefix grey-text'></i>
+                <input
+                  type='password'
+                  id='defaultForm-pass-signup'
+                  className='form-control'
+                  name='password'
+                  value={state.password}
+                  onChange={onHandleChange}
+                />
+                <label htmlFor='defaultForm-pass-signup'>Your password</label>
+              </div>
+
+              <div className='md-form mb-4'>
+                <i className='fas fa-lock prefix grey-text'></i>
+                <input
+                  type='password'
+                  id='defaultForm-pass2'
+                  className='form-control'
+                  name='password2'
+                  value={state.password2}
+                  onChange={onHandleChange}
+                />
+                <label htmlFor='defaultForm-pass2'>Repeat password</label>
+              </div>
+            </div>
+
+            <div className='modal-footer d-flex justify-content-center'>
+              <button className='btn btn-default' onClick={onHandleSignUp}>
+                Sign Up
+              </button>
+            </div>
+          </div>
+        </div>
+      </form>
+
       <nav className='navbar fixed-top navbar-expand-lg navbar-light white scrolling-navbar'>
         <div className='container'>
           {/* <!-- Brand --> */}

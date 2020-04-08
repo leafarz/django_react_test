@@ -94,6 +94,35 @@ export const login = (username, password, url) => async (dispatch) => {
     });
 };
 
+export const signUp = (username, password, password2, email, url) => async (
+  dispatch
+) => {
+  dispatch(getAuth());
+  await axios
+    .post(
+      url,
+      JSON.stringify({
+        username: username,
+        password1: password,
+        password2: password2,
+        email: email,
+      }),
+      {
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      }
+    )
+    .then((res) => {
+      localStorage.setItem('token', res.data.access_token);
+      localStorage.setItem('refreshToken', res.data.refresh_token);
+      dispatch(onAuthSuccess(res.data.user.username));
+    })
+    .catch((err) => {
+      console.error(err);
+    });
+};
+
 export const logout = (url) => async (dispatch) => {
   dispatch(getAuth());
   const token = localStorage.getItem('token');
