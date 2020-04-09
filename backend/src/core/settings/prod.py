@@ -34,4 +34,6 @@ REST_FRAMEWORK = {
     "DEFAULT_PERMISSION_CLASSES": ["rest_framework.renderers.JSONRenderer",]
 }
 
-JWT_AUTH_COOKIE = "JWT_AUTH_COOKIE"
+SIMPLE_JWT = {
+    "ACCESS_TOKEN_LIFETIME": timedelta(minutes=15),
+}
