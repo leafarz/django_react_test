@@ -3,11 +3,13 @@ import { fetchItem, itemSelector } from './../slices/item';
 import { useDispatch, useSelector } from 'react-redux';
 
 import { addToCart } from './../slices/cart';
+import { authSelector } from './../slices/auth';
 import { useParams } from 'react-router-dom';
 
 const Product = () => {
   const params = useParams();
   const { item, loading } = useSelector(itemSelector);
+  const { username } = useSelector(authSelector);
   const dispatch = useDispatch();
   const [amount, setAmount] = useState(1);
 
@@ -76,24 +78,26 @@ const Product = () => {
                     repellendus maiores quia sapiente.
                   </p>
 
-                  <form className='d-flex justify-content-left'>
-                    <input
-                      type='number'
-                      value={amount}
-                      onChange={onHandleChange}
-                      aria-label='Search'
-                      className='form-control'
-                      style={{ width: '100px' }}
-                    />
-                    <button
-                      className='btn btn-primary btn-md my-0 p'
-                      type='submit'
-                      onClick={onHandleAddToCart}
-                    >
-                      Add to cart
-                      <i className='fas fa-shopping-cart ml-1'></i>
-                    </button>
-                  </form>
+                  {username && (
+                    <form className='d-flex justify-content-left'>
+                      <input
+                        type='number'
+                        value={amount}
+                        onChange={onHandleChange}
+                        aria-label='Search'
+                        className='form-control'
+                        style={{ width: '100px' }}
+                      />
+                      <button
+                        className='btn btn-primary btn-md my-0 p'
+                        type='submit'
+                        onClick={onHandleAddToCart}
+                      >
+                        Add to cart
+                        <i className='fas fa-shopping-cart ml-1'></i>
+                      </button>
+                    </form>
+                  )}
                 </div>
               </div>
             </div>
