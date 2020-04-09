@@ -33,6 +33,15 @@ const NavBar = (props) => {
   const loginCloseRef = useRef(null);
   const signUpCloseRef = useRef(null);
 
+  const clearState = () => {
+    setState({
+      username: '',
+      password: '',
+      password2: '',
+      email: '',
+    });
+  };
+
   useEffect(() => {
     if (username) {
       loginCloseRef.current.click();
@@ -122,6 +131,7 @@ const NavBar = (props) => {
                 data-toggle='modal'
                 data-target='#modalLoginForm'
                 style={buttonStyle}
+                onClick={clearState}
               >
                 Login
               </button>
@@ -135,6 +145,7 @@ const NavBar = (props) => {
                 data-toggle='modal'
                 data-target='#modalSignUpForm'
                 style={buttonStyle}
+                onClick={clearState}
               >
                 SignUp
               </button>
