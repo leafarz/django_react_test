@@ -2,9 +2,9 @@ import React, { useEffect } from 'react';
 import { fetchItems, itemsSelector } from './../slices/items';
 import { useDispatch, useSelector } from 'react-redux';
 
-import BodyNav from '../components/BodyNav';
 import Carousel from '../components/Carousel';
 import GridRow from '../components/GridRow';
+import ItemFilter from '../components/ItemFilter';
 import Pagination from '../components/Pagination';
 import { categorySelector } from './../slices/category';
 
@@ -48,13 +48,23 @@ const Home = () => {
     );
   };
 
+  const getSlideUrls = () => {
+    const bestSellers = items.filter(
+      (item) => item.tag_display === 'bestseller'
+    );
+    return bestSellers.map((bestSeller) => [
+      bestSeller.id,
+      bestSeller.image_url,
+    ]);
+  };
+
   return (
     <div>
-      <Carousel />
+      <Carousel itemsToDisplay={getSlideUrls()} />
 
       <main>
         <div className='container'>
-          <BodyNav />
+          <ItemFilter />
           {renderItems()}
         </div>
       </main>

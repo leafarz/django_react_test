@@ -1,145 +1,81 @@
+import { Link } from 'react-router-dom';
 import React from 'react';
 
-const style1 = {
-  backgroundImage:
-    "url('https://mdbootstrap.com/img/Photos/Horizontal/E-commerce/8-col/img%282%29.jpg')",
-  backgroundRepeat: 'no-repeat',
-  backgroundSize: 'cover'
-};
+const Carousel = (props) => {
+  const getPages = () => {
+    return props.itemsToDisplay.map((_, i) => (
+      <li
+        key={`cbutton_${i}`}
+        data-target='#carousel-example-1z'
+        data-slide-to={`${i}`}
+        className={i === 0 ? 'active' : ''}
+      ></li>
+    ));
+  };
 
-const style2 = {
-  backgroundImage:
-    "url('https://mdbootstrap.com/img/Photos/Horizontal/E-commerce/8-col/img%283%29.jpg')",
-  backgroundRepeat: 'no-repeat',
-  backgroundSize: 'cover'
-};
+  const getSlides = () => {
+    let components = [];
+    props.itemsToDisplay.forEach((item, i) => {
+      const item_id = item[0];
+      const item_url = item[1];
 
-const style3 = {
-  backgroundImage:
-    "url('https://mdbootstrap.com/img/Photos/Horizontal/E-commerce/8-col/img%285%29.jpg')",
-  backgroundRepeat: 'no-repeat',
-  backgroundSize: 'cover'
-};
+      components.push(
+        <div
+          key={`cslide_${item_id}`}
+          className={`carousel-item ${i === 0 ? 'active' : ''}`}
+        >
+          <div className='view'>
+            <img
+              className='d-block w-100'
+              src={item_url}
+              style={{ transform: 'translateY(-30%)' }}
+              alt=''
+            />
+            <div className='mask rgba-black-strong d-flex justify-content-center align-items-center'>
+              <div className='text-center white-text mx-5 wow fadeIn'>
+                <h1 className='mb-4'>
+                  <strong>Lorem ipsum dolor sit amet</strong>
+                </h1>
 
-const Carousel = () => {
+                <p>
+                  <strong>
+                    Lorem ipsum dolor sit amet, consectetur adipisicing elit.
+                    Quisquam, doloribus?
+                  </strong>
+                </p>
+
+                <p className='mb-4 d-none d-md-block'>
+                  <strong>
+                    Lorem, ipsum dolor sit amet consectetur adipisicing elit.
+                    Aperiam corporis alias delectus sed, nisi sunt blanditiis,
+                    maiores a tenetur, quaerat inventore id. Est, impedit velit!
+                  </strong>
+                </p>
+
+                <Link
+                  className='btn btn-outline-white btn-lg'
+                  to={`/product/${item_id}`}
+                >
+                  Click To View
+                </Link>
+              </div>
+            </div>
+          </div>
+        </div>
+      );
+    });
+    return React.createElement(React.Fragment, null, components);
+  };
   return (
     <div
       id='carousel-example-1z'
       className='carousel slide carousel-fade pt-4'
       data-ride='carousel'
     >
-      <ol className='carousel-indicators'>
-        <li
-          data-target='#carousel-example-1z'
-          data-slide-to='0'
-          className='active'
-        ></li>
-        <li data-target='#carousel-example-1z' data-slide-to='1'></li>
-        <li data-target='#carousel-example-1z' data-slide-to='2'></li>
-      </ol>
+      <ol className='carousel-indicators'>{getPages()}</ol>
 
       <div className='carousel-inner' role='listbox'>
-        <div className='carousel-item active'>
-          <div className='view' style={{ style2 }}>
-            <div className='mask rgba-black-strong d-flex justify-content-center align-items-center'>
-              <div className='text-center white-text mx-5 wow fadeIn'>
-                <h1 className='mb-4'>
-                  <strong>Learn Bootstrap 4 with MDB</strong>
-                </h1>
-
-                <p>
-                  <strong>Best & free guide of responsive web design</strong>
-                </p>
-
-                <p className='mb-4 d-none d-md-block'>
-                  <strong>
-                    The most comprehensive tutorial for the Bootstrap 4. Loved
-                    by over 500 000 users. Video and written versions available.
-                    Create your own, stunning website.
-                  </strong>
-                </p>
-
-                <a
-                  target='_blank'
-                  rel='noopener noreferrer'
-                  href='https://mdbootstrap.com/education/bootstrap/'
-                  className='btn btn-outline-white btn-lg'
-                >
-                  Start free tutorial
-                  <i className='fas fa-graduation-cap ml-2'></i>
-                </a>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <div className='carousel-item'>
-          <div className='view' style={{ style1 }}>
-            <div className='mask rgba-black-strong d-flex justify-content-center align-items-center'>
-              <div className='text-center white-text mx-5 wow fadeIn'>
-                <h1 className='mb-4'>
-                  <strong>Learn Bootstrap 4 with MDB</strong>
-                </h1>
-
-                <p>
-                  <strong>Best & free guide of responsive web design</strong>
-                </p>
-
-                <p className='mb-4 d-none d-md-block'>
-                  <strong>
-                    The most comprehensive tutorial for the Bootstrap 4. Loved
-                    by over 500 000 users. Video and written versions available.
-                    Create your own, stunning website.
-                  </strong>
-                </p>
-
-                <a
-                  target='_blank'
-                  rel='noopener noreferrer'
-                  href='https://mdbootstrap.com/education/bootstrap/'
-                  className='btn btn-outline-white btn-lg'
-                >
-                  Start free tutorial
-                  <i className='fas fa-graduation-cap ml-2'></i>
-                </a>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <div className='carousel-item'>
-          <div className='view' style={{ style3 }}>
-            <div className='mask rgba-black-strong d-flex justify-content-center align-items-center'>
-              <div className='text-center white-text mx-5 wow fadeIn'>
-                <h1 className='mb-4'>
-                  <strong>Learn Bootstrap 4 with MDB</strong>
-                </h1>
-
-                <p>
-                  <strong>Best & free guide of responsive web design</strong>
-                </p>
-
-                <p className='mb-4 d-none d-md-block'>
-                  <strong>
-                    The most comprehensive tutorial for the Bootstrap 4. Loved
-                    by over 500 000 users. Video and written versions available.
-                    Create your own, stunning website.
-                  </strong>
-                </p>
-
-                <a
-                  target='_blank'
-                  rel='noopener noreferrer'
-                  href='https://mdbootstrap.com/education/bootstrap/'
-                  className='btn btn-outline-white btn-lg'
-                >
-                  Start free tutorial
-                  <i className='fas fa-graduation-cap ml-2'></i>
-                </a>
-              </div>
-            </div>
-          </div>
-        </div>
+        {getSlides()}
       </div>
 
       <a
@@ -151,6 +87,7 @@ const Carousel = () => {
         <span className='carousel-control-prev-icon' aria-hidden='true'></span>
         <span className='sr-only'>Previous</span>
       </a>
+
       <a
         className='carousel-control-next'
         href='#carousel-example-1z'

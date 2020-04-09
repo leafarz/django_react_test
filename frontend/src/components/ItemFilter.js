@@ -1,8 +1,8 @@
-import { categorySelector, setCategoryDispatch } from './../slices/category';
+import { categorySelector, setCategoryDispatch } from '../slices/category';
 import { useDispatch, useSelector } from 'react-redux';
 
 import React from 'react';
-import { setPageDispatch } from './../slices/page';
+import { setPageDispatch } from '../slices/page';
 
 const buttons = ['All', 'Shirt', 'Sport Wear', 'Outwear'];
 const BodyNav = () => {
